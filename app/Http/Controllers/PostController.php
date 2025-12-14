@@ -32,7 +32,7 @@ class PostController extends Controller
         $content = $validated['content'];
 
         $post = Post::create([
-            'user_id' => 1,
+            'user_id' => auth()->id(),
             'title' => $title,
             'content' => $content,
         ]);
