@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -47,6 +48,8 @@ class PostController extends Controller
 
     public function update(StorePostRequest $request, Post $post)
     {
+        Gate::authorize('update', $post);
+
         $validated = $request->validated();
         $post->update($validated);
 
@@ -55,6 +58,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        Gate::authorize('delete', $post);
+
         $post->delete();
 
         return redirect()->route('posts.index');
