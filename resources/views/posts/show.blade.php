@@ -6,3 +6,16 @@
     {{ $post->content }}
 </div>
 
+<a href="{{ route('posts.edit', $post->id) }}">
+    수정
+</a>
+
+
+<form method="POST" action="{{ route('posts.destroy', $post->id) }}">
+    @csrf
+    @method('DELETE')
+
+    <button type="submit">삭제</button>
+</form>
+
+
