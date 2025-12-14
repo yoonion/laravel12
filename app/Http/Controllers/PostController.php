@@ -27,14 +27,28 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        $title = $request->validated()['title'];
-        $content = $request->validated()['content'];
+        $validated = $request->validated();
+        $title = $validated['title'];
+        $content = $validated['content'];
 
         $post = Post::create([
             'user_id' => 1,
             'title' => $title,
             'content' => $content,
         ]);
+
+        return redirect()->route('posts.show', $post->id);
+    }
+
+    public function edit(Post $post)
+    {
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    public function update(StorePostRequest $request, Post $post)
+    {
+        $validated = $request->validated();
+        $post->update($validated);
 
         return redirect()->route('posts.show', $post->id);
     }
